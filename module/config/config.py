@@ -285,16 +285,13 @@ class AzurLaneConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher
                 if isinstance(next_run, datetime) and next_run > limit:
                     deep_set(self.data, keys=f"{task}.Scheduler.NextRun", value=now)
 
-        for task in ["Commission", "Research", "Reward"]:
+        for task in []:
             if not self.is_task_enabled(task):
-                self.modified[f"{task}.Scheduler.Enable"] = True
+                self.modified[f"{task}.Scheduler.Enable"] = False
         force_enable = list
 
         force_enable(
             [
-                "Commission",
-                "Research",
-                "Reward",
             ]
         )
         limit_next_run(["Commission", "Reward"], limit=now + timedelta(hours=12, seconds=-1))
